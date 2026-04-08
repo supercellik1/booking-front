@@ -1,0 +1,176 @@
+.country-section {
+  --section-x-pad: 40px;
+  --accent-bg: rgba(255, 77, 136, 0.6);
+  --accent-title: rgba(255, 77, 136, 0.9);
+
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: var(--section-x-pad);
+
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #1a1a1a, #2a2a2a);
+}
+.country-title {
+  font-size: 58px;
+  margin-bottom: 0px;
+  color: #ff4d88;
+}
+
+/* 🔥 ОБЕРТКА */
+.scroll-wrapper {
+  position: relative;
+  width: calc(100% + var(--section-x-pad));
+  margin-left: calc(var(--section-x-pad) * -1);
+  padding-top: 58px;
+}
+
+.scroll-controls {
+  position: absolute;
+  top: -40px;
+  right: 70px;
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.scroll-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.scroll-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.scroll-btn:active {
+  transform: translateY(0);
+}
+
+
+.hotel-row {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 10px 6px 20px 70px;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+}
+
+.hotel-row:active,
+.hotel-row.is-dragging {
+  cursor: grabbing;
+}
+
+
+.hotel-row > * {
+  scroll-snap-align: start;
+}
+
+
+.hotel-row::-webkit-scrollbar {
+  height: 0;
+}
+
+
+
+
+.country-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.8),
+    rgba(0,0,0,0.9)
+  );
+
+  z-index: 0;
+}
+
+.country-title,
+.scroll-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .scroll-wrapper {
+    padding-top: 52px;
+  }
+
+  .scroll-controls {
+    right: 10px;
+    gap: 8px;
+  }
+
+  .scroll-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.bg-image {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.country-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.7),
+    var(--accent-bg)
+  );
+
+  z-index: 0;
+}
+
+.country-title {
+  color: var(--accent-title);
+}
+
+.details-btn {
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    #ffffff33
+  );
+}
