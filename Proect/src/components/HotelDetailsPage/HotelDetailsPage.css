@@ -1,0 +1,63 @@
+.details-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffe4e1 0%, #ffb7c5 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+.back-button {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  background: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #ff85a2;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.details-card {
+  width: 90%;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 40px;
+  border: 2px solid white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.details-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+h1 { color: #4a4a4a; }
+h1 span { color: #ff85a2; font-size: 1.2rem; margin-left: 10px; }
+
+.map-section {
+  height: 400px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.book-now-btn {
+  margin-top: 30px;
+  padding: 15px 30px;
+  background: #ffb7c5;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .details-content { grid-template-columns: 1fr; }
+}
