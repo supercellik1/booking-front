@@ -12,7 +12,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSwitch }) => {
   return (
     <motion.div 
       className="login-card"
-      // Анимация появления/исчезновения всей карточки
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 50 }}
