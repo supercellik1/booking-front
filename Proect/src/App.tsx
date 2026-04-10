@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { HomePage, AuthPage, HotelDetailsPage, AboutUsPage } from "./index"; 
+import { HomePage, LoginScreen, RegisterScreen, HotelDetailsPage, AboutUsPage } from "./index"; 
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<AuthPage />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterScreen />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/hotel/:id" element={<HotelDetailsPage />} />
         <Route path="*" element={<Navigate to="/login" />} />

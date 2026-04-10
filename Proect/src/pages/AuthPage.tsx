@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LoginPage from '../components/AuthPageComponents/LoginPage/LoginPage';
 import RegisterPage from '../components/AuthPageComponents/RegisterPage/RegisterPage';
 
-const AuthPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
+export const LoginScreen: React.FC = () => {
   return (
-    <div className="login-container"> {/* Общий контейнер с сакурой */}
+    <div className="login-container"> 
       <AnimatePresence mode="wait">
-        {isLogin ? (
-          <LoginPage key="login" onSwitch={() => setIsLogin(false)} />
-        ) : (
-          <RegisterPage key="register" onSwitch={() => setIsLogin(true)} />
-        )}
+      <LoginPage />
       </AnimatePresence>
     </div>
   );
 };
 
-export default AuthPage;
+
+export const RegisterScreen: React.FC = () => {
+  return (
+    <div className="login-container"> 
+      <AnimatePresence mode="wait">
+      <RegisterPage />
+      </AnimatePresence>
+    </div>
+  );
+};
+
+  
+

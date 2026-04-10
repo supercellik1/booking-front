@@ -2,13 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './LoginPage.css';
 import loginAnimeArt from '../../../assets/images/devushka_tsvetok_plate_876877_1920x1080.jpg';
+import { useNavigate } from "react-router-dom";
 
-// Описываем тип пропсов
-interface LoginPageProps {
-  onSwitch: () => void;
-}
+const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
 
-const LoginPage: React.FC<LoginPageProps> = ({ onSwitch }) => {
   return (
     <motion.div 
       className="login-card"
@@ -17,6 +15,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSwitch }) => {
       exit={{ opacity: 0, x: 50 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
+      <button className="back-arrow" onClick={() => navigate('/')}>
+  <motion.span 
+    whileHover={{ x: -4 }} 
+    transition={{ type: "spring", stiffness: 400 }}
+  >
+    ❮
+  </motion.span>
+</button>
+
       <div className="login-image-section">
         <img 
           src={loginAnimeArt} 
@@ -57,9 +64,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSwitch }) => {
           <a href="#">Forgot password?</a>
           <p>
             Don't have an account?{' '}
-            <span className="highlight" onClick={onSwitch} style={{ cursor: 'pointer' }}>
-              Join us
-            </span>
+            <span 
+          className="highlight" onClick={() => navigate("/register")} style={{ cursor: 'pointer' }}>
+          Join us
+        </span>
           </p>
         </div>
       </div>

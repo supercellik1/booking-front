@@ -1,15 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import './RegisterPage.css';
-
-// Импортируем ту же картинку
+import { useNavigate } from "react-router-dom";
 import loginAnimeArt from '../../../assets/images/devushka_tsvetok_plate_876877_1920x1080.jpg';
 
-interface RegisterPageProps {
-  onSwitch: () => void; // Функция для возврата на логин
-}
 
-const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitch }) => {
+const RegisterPage: React.FC = () => {
+    const navigate = useNavigate();
+
   return (
     <motion.div 
       className="register-card"
@@ -18,6 +16,15 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitch }) => {
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
+      <button className="back-arrow" onClick={() => navigate('/')}>
+        <motion.span 
+          whileHover={{ x: -4 }} 
+          transition={{ type: "spring", stiffness: 400 }}
+        >
+          ❮
+        </motion.span>
+        </button>
+
       <div className="register-form-section">
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
@@ -49,7 +56,9 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitch }) => {
         </form>
 
         <div className="footer-links">
-          <p>Already have an account? <span className="highlight" onClick={onSwitch}>Login here</span></p>
+          <p>Already have an account? <span className="highlight" onClick={() => navigate("/login")} style={{ cursor: 'pointer' }}>
+          Login here
+        </span></p>
         </div>
       </div>
 
@@ -59,7 +68,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitch }) => {
           alt="Anime Register Art" 
           className="anime-art-image-reg" 
         />
-        {/* Оверлей, чтобы картинка в регистрации смотрелась чуть иначе */}
         <div className="image-overlay"></div>
       </div>
     </motion.div>

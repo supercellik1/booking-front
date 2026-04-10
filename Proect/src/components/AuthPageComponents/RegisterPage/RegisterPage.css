@@ -57,5 +57,34 @@
   transition: 0.3s;
 }
 
-/* Стили для заголовков и инпутов берем такие же, как в LoginPage.css 
-   или выносим в общий файл стилей */
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  outline: none;
+  cursor: pointer;
+  
+  padding: 8px 16px;
+  border-radius: 50px;
+  color: #ff85a2;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(255, 183, 197, 0.2);
+}
+
+.back-arrow:hover {
+  background: white;
+  color: #ffb7c5;
+  box-shadow: 0 6px 15px rgba(255, 183, 197, 0.4);
+  transform: translateY(-1px);
+}
