@@ -6,7 +6,7 @@
   overflow: hidden;
 
   background: #111;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15);
 }
 
 .hotel-poster {
@@ -18,7 +18,7 @@
   background-position: center;
 }
 
-/* затемнение/градиент как на примере */
+
 .hotel-poster__overlay {
   position: absolute;
   inset: 0;
