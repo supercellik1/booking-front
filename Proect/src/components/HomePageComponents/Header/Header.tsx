@@ -47,14 +47,14 @@ const Header: React.FC = () => {
           <div
             className="avatar"
             onClick={() => {
-               navigate("/auth");
+               navigate("/login");
             }}
             role="button"
             aria-label="Перейти на страницу аутентификации"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
-                window.location.hash = "#auth";
+                navigate("/login");
               }
             }}
           >
