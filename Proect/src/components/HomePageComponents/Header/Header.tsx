@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     if (!isAuthenticated) {
       navigate("/login");
     } else {
-      setMenuOpen(!menuOpen);
+      navigate("/profile");
     }
   };
 
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
                   <div className="dropdown-item" onClick={() => { navigate("/profile"); setMenuOpen(false); }}>
                     Профиль ({user?.email})
                   </div>
-                  <div className="dropdown-item">Мои поездки</div>
+                  <div className="dropdown-item">Мои отзывы</div>
                   <div className="dropdown-item logout-btn" onClick={() => { logout(); setMenuOpen(false); }}>
                     Выйти
                   </div>
