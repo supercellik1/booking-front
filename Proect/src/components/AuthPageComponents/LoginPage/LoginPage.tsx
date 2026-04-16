@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './LoginPage.css';
 import loginAnimeArt from '../../../assets/images/devushka_tsvetok_plate_876877_1920x1080.jpg';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../../context/AuthContext';
+import { authService } from '../../../api/auth/authService';
 
 const LoginPage: React.FC = () => {
+    
     const navigate = useNavigate();
+    const { login } = useAuth();
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const data = await authService.login(email, password);
+            login(data.token, data.user);
+            navigate('/');
+        } catch (err) {
+            alert("Ошибка авторизации. Проверьте данные.");
+            console.error(err);
+        }
+    };
 
   return (
     <motion.div 
@@ -41,26 +60,30 @@ const LoginPage: React.FC = () => {
           ログイン <br />
           <span>Welcome Back</span>
         </motion.h1>
-
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="input-group">
-            <input type="text" placeholder="Username" required />
-          </div>
-          <div className="input-group">
-            <input type="password" placeholder="Password" required />
-          </div>
-          
-          <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "#ff85a2" }}
-            whileTap={{ scale: 0.95 }}
-            className="login-button"
-            type="submit"
-          >
-            Sign In
-          </motion.button>
-        </form>
-
-        <div className="footer-links">
+            <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} // Записываем данные
+                            required 
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input 
+                            type="password" 
+                            placeholder="Password" 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} // Записываем данные
+                            required 
+                        />
+                    </div>
+                    <motion.button whileTap={{ scale: 0.95 }} className="login-button" type="submit">
+                        Sign In
+                    </motion.button>
+                </form>
+          <div className="footer-links">
           <a href="#">Forgot password?</a>
           <p>
             Don't have an account?{' '}

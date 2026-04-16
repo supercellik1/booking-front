@@ -12,23 +12,26 @@ const HomePage: React.FC = () => {
     <>
       <Header />
       <Hero />
-    <CountrySection 
-        title="Japan 🇯🇵" 
+      <CountrySection  
+        title="Japan 🇯🇵"
+        countryName="Japan" 
         bgImage={japanBg}
         color="rgba(255, 77, 136, 0.8)"
-    />
+      />
 
-    <CountrySection 
-        title="Italy 🇮🇹" 
+      <CountrySection  
+        title="Italy 🇮🇹"
+        countryName="Italy" 
         bgImage={italyBg}
         color="#ff7a3d"
-    />
+      />
 
-    <CountrySection 
-        title="France 🇫🇷" 
+      <CountrySection  
+        title="France 🇫🇷"
+        countryName="France"
         bgImage={franceBg}
         color="#4da6ff"
-    />
+      />
       <Footer />
     </>
   );

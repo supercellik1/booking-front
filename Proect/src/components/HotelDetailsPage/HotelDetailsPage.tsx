@@ -1,107 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaStar, FaArrowLeft, FaMapMarkerAlt } from "react-icons/fa";
-import "./HotelDetailsPage.css"; // Исправил название импорта стиля
-
-// Импортируем твои ассеты для примера
-import hotel1 from "../../assets/images/testhotel2.jpg";
-import hotel2 from "../../assets/images/testhotel2.jpg";
-import hotel3 from "../../assets/images/testhotel3.jpg";
+import "./HotelDetailsPage.css";
+import { hotelService } from "../../api/hotels/hotelService"; 
+import type { Hotel } from "../../api/hotels/types"; 
 
 const HotelDetailsPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  
+  const [hotel, setHotel] = useState<Hotel | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [currentImg, setCurrentImg] = useState(0);
 
-  // Заглушка данных. В будущем по id можно искать в массиве или делать API запрос
-  const hotel = {
-    name: "Sakura Ryokan Premium",
-    rating: 9.2,
-    location: "Kyoto, Japan, Higashiyama District",
-    fullDescription: "Этот традиционный рёкан предлагает аутентичный японский опыт с татами, онсэнами и изысканной кухней кайсеки. Расположен в самом сердце исторического района, где каждый кирпич дышит историей старого Киото. Идеальное место для тех, кто ищет уединения и гармонии с природой.",
-    images: [hotel1, hotel2, hotel3],
-    // Ссылка на реальный фрейм гугл-карты (Киото)
-    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3268.1032332155755!2d135.77583627632617!3d34.99158336750059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600108d466ca9495%3A0x6a26759902621746!2sKiyomizu-dera!5e0!3m2!1sru!2sjp!4v1710345678901!5m2!1sru!2sjp"
-  };
+  useEffect(() => {
+    const fetchHotel = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const data = await hotelService.getHotelById(id);
+        setHotel(data);
+      } catch (error) {
+        console.error("Ошибка:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHotel();
+  }, [id]);
+
+  if (loading) return <div className="loading-screen">読み込み中...</div>;
+  if (!hotel) return <div className="error-screen">Hotel not found</div>;
 
   return (
-    <motion.div 
-      className="details-container"
-      initial={{ opacity: 0, y: 20 }} 
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* Кнопка назад в твоем стиле */}
-      <button className="back-btn" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> Назад к отелям
+    <div className="hotel-page-wrapper">
+      <button className="back-arrow-fixed" onClick={() => navigate(-1)}>
+         ❮
       </button>
 
-      <section className="details-header">
-        <div className="header-info">
-          <motion.h1 
-            initial={{ x: -20 }} 
-            animate={{ x: 0 }}
-          >
-            {hotel.name}
-          </motion.h1>
-          <div className="rating-badge">
-            <FaStar /> <span>{hotel.rating}</span>
-          </div>
-        </div>
-        <p className="location-text">
-          <FaMapMarkerAlt /> {hotel.location}
-        </p>
-      </section>
-
-      <div className="details-grid">
-        <div className="main-info-card shadow-glass">
-          <div className="image-gallery">
-             {hotel.images.map((img, i) => (
-               <motion.div 
-                 key={i} 
-                 className={`gallery-img-wrapper img-${i}`}
-                 whileHover={{ scale: 1.02 }}
-               >
-                 <img src={img} alt={`${hotel.name} view ${i}`} />
-               </motion.div>
-             ))}
-          </div>
-          
-          <div className="description-section">
-            <h3>Описание отеля</h3>
-            <p>{hotel.fullDescription}</p>
-            
-            <div className="features-list">
-               <span className="feature-tag">Бесплатный Wi-Fi</span>
-               <span className="feature-tag">Завтрак включен</span>
-               <span className="feature-tag">Традиционный Онсэн</span>
-            </div>
-          </div>
-        </div>
-
-        <aside className="sidebar-container">
-          <div className="map-sidebar shadow-glass">
-            <h3>Местоположение</h3>
-            <div className="map-wrapper">
-              <iframe 
-                title="hotel-map"
-                src={hotel.mapUrl}
-                width="100%" 
-                height="250" 
-                style={{ border: 0, borderRadius: "15px" }} 
-                allowFullScreen 
-                loading="lazy" 
+      <div className="content-layout">
+        <main className="main-content">
+          <div className="glass-card slider-section">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentImg}
+                src={hotel.images[currentImg]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="main-slider-img"
               />
+            </AnimatePresence>
+            <div className="slider-nav">
+              <button onClick={() => setCurrentImg(prev => prev === 0 ? hotel.images.length-1 : prev-1)}>❮</button>
+              <span>{currentImg + 1} / {hotel.images.length}</span>
+              <button onClick={() => setCurrentImg(prev => prev === hotel.images.length-1 ? 0 : prev+1)}>❯</button>
             </div>
-            <div className="price-info">
-               <span className="price-label">Цена за ночь:</span>
-               <span className="price-value">¥25,000</span>
+          </div>
+
+          <div className="glass-card info-section">
+            <h1>{hotel.name}</h1>
+            <div className="location-line">
+              <FaMapMarkerAlt /> {hotel.location}
             </div>
-            <button className="book-btn">Забронировать сейчас</button>
+            <div className="description-text">
+              <h3>About this place</h3>
+              <p>{hotel.fullDescription}</p>
+            </div>
+          </div>
+        </main>
+
+        <aside className="sidebar-content">
+          <div className="glass-card booking-card">
+            <div className="price-header">
+              <span className="price-val">{hotel.price}</span>
+              <span className="price-sub">/ per night</span>
+            </div>
+            <div className="rating-row">
+              <FaStar color="#ffb7c5" /> {hotel.rating} Excellent
+            </div>
+            <button className="main-register-button"
+            onClick={() => navigate(`/book/${hotel.id}`)}>
+                Book Now
+            </button>
+          </div>
+
+          <div className="glass-card map-card">
+            <h3>Location</h3>
+            <div className="map-holder">
+              <iframe title="map" src={hotel.mapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" />
+            </div>
           </div>
         </aside>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
