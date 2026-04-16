@@ -1,0 +1,112 @@
+
+.booking-card-form {
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.65); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+}
+
+.booking-card-form h3 {
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #fff;
+    /* Тень для текста, чтобы он "отрывался" от фона */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.booking-form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Контейнер для меток и инпутов */
+.input-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.input-field label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffb7c5; /* Твой акцентный цвет для читаемости */
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+
+.booking-card-form input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Делаем границы четче */
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Улучшаем читаемость плейсхолдеров */
+.booking-card-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.booking-card-form input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffb7c5;
+    box-shadow: 0 0 12px rgba(255, 183, 197, 0.3);
+}
+
+.date-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.date-row .input-field {
+    flex: 1;
+}
+
+/* Специально для темных браузерных иконок календаря */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Делает иконку календаря белой */
+    cursor: pointer;
+}
+
+.booking-card-form .main-register-button {
+    margin-top: 1.5rem;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: #ffb7c5;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 183, 197, 0.4);
+}
+
+.booking-card-form .main-register-button:hover {
+    transform: translateY(-2px);
+    background: #ffa4b5;
+}
+
+.booking-card-form .main-register-button:disabled {
+    background: #666;
+    cursor: not-allowed;
+    transform: none;
+}

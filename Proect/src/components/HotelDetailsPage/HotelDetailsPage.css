@@ -1,63 +1,179 @@
-.details-container {
+/* Основной фон — делаем чуть холоднее, чтобы розовый не "давил" */
+.hotel-page-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #ffe4e1 0%, #ffb7c5 100%);
+  background-color: #fff5f7; 
+  padding: 100px 5% 40px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px;
+  justify-content: center;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #2d3436; /* Темный цвет текста по умолчанию */
 }
 
-.back-button {
-  align-self: flex-start;
-  margin-bottom: 20px;
-  background: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
-  color: #ff85a2;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.details-card {
-  width: 90%;
-  max-width: 1000px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 30px;
-  padding: 40px;
-  border: 2px solid white;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.details-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-h1 { color: #4a4a4a; }
-h1 span { color: #ff85a2; font-size: 1.2rem; margin-left: 10px; }
-
-.map-section {
-  height: 400px;
-  background: #eee;
-  border-radius: 20px;
+/* Стеклянные карточки — делаем их менее прозрачными для контраста */
+.glass-card {
+  background: #ffffff; /* Чисто белый фон для идеального контраста */
+  border-radius: 24px;
+  border: 1px solid #ffe4e8;
+  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.15);
+  margin-bottom: 25px;
+  padding: 30px;
   overflow: hidden;
 }
 
-.book-now-btn {
-  margin-top: 30px;
-  padding: 15px 30px;
-  background: #ffb7c5;
-  border: none;
-  border-radius: 15px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+/* Заголовки — делаем их почти черными */
+.info-section h1 {
+  font-size: 3rem;
+  color: #1a1a1a; 
+  margin: 0 0 15px 0;
+  font-weight: 800;
+  line-height: 1.1;
 }
 
-@media (max-width: 768px) {
-  .details-content { grid-template-columns: 1fr; }
+/* Текст описания — серый, но достаточно темный для чтения */
+.description-text h3 {
+  color: #ff5c8a; /* Акцентный розовый для подзаголовков */
+  font-size: 1.4rem;
+  margin-top: 25px;
+}
+
+.full-desc {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444; /* Хорошо читаемый серый */
+  margin-top: 10px;
+}
+
+/* Локация и иконки */
+.location-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #636e72;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.location-line svg {
+  color: #ff85a2;
+}
+
+/* Секция цены в сайдбаре */
+.price-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.price-val {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #d63384; /* Глубокий розовый/пурпурный */
+}
+
+.price-sub {
+  color: #b2bec3;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Кнопка — делаем её ярче и жирнее */
+.main-register-button {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ff85a2 0%, #ff5c8a 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 92, 138, 0.3);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.main-register-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(255, 92, 138, 0.5);
+}
+
+/* Слайдер и его навигация */
+.slider-nav {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a; /* Темная подложка для кнопок — теперь их видно! */
+  padding: 8px 18px;
+  border-radius: 40px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slider-nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.2s;
+}
+
+.slider-nav button:hover {
+  color: #ffb7c5;
+}
+
+/* Кнопка назад (Фиксированная) */
+.back-arrow-fixed {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  z-index: 1000;
+  background: #1a1a1a; /* Темная кнопка на светлом фоне — идеальный контраст */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.back-arrow-fixed:hover {
+  background: #ff5c8a;
+  transform: translateX(-5px);
+}
+
+/* Карта */
+.map-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+}
+
+.map-holder {
+  height: 300px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+/* Аниме-маскот — делаем чуть прозрачнее, чтобы не отвлекал от текста */
+.anime-mascot-fixed {
+  position: fixed;
+  bottom: -20px;
+  right: -30px;
+  height: 550px;
+  z-index: 0; /* Уходит за карточки */
+  pointer-events: none;
+  opacity: 0.6;
 }
