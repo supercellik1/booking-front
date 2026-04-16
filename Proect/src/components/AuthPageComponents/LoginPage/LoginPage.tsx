@@ -7,24 +7,31 @@ import { useAuth } from '../../../context/AuthContext';
 import { authService } from '../../../api/auth/authService';
 
 const LoginPage: React.FC = () => {
-    
-    const navigate = useNavigate();
-    const { login } = useAuth();
-    
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const data = await authService.login(email, password);
-            login(data.token, data.user);
-            navigate('/');
-        } catch (err) {
-            alert("Ошибка авторизации. Проверьте данные.");
-            console.error(err);
-        }
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage('');
+
+    try {
+      const data = await authService.login(email, password);
+      login(data.token, data.user);
+      navigate('/');
+    } catch (err) {
+      setPassword('');
+      if (!email.includes('@')) {
+        setErrorMessage('❗ Email должен содержать символ @');
+      } else {
+        setErrorMessage('❗ Ошибка авторизации. Проверьте почту и пароль.');
+      }
+
+      console.error(err);
+    }
+  };
 
   return (
     <motion.div 
@@ -35,13 +42,13 @@ const LoginPage: React.FC = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <button className="back-arrow" onClick={() => navigate('/')}>
-  <motion.span 
-    whileHover={{ x: -4 }} 
-    transition={{ type: "spring", stiffness: 400 }}
-  >
-    ❮
-  </motion.span>
-</button>
+        <motion.span 
+          whileHover={{ x: -4 }} 
+          transition={{ type: "spring", stiffness: 400 }}
+        >
+          ❮
+        </motion.span>
+      </button>
 
       <div className="login-image-section">
         <img 
@@ -60,37 +67,45 @@ const LoginPage: React.FC = () => {
           ログイン <br />
           <span>Welcome Back</span>
         </motion.h1>
-            <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <input 
-                            type="email" 
-                            placeholder="Email" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)} // Записываем данные
-                            required 
-                        />
-                    </div>
-                    <div className="input-group">
-                        <input 
-                            type="password" 
-                            placeholder="Password" 
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)} // Записываем данные
-                            required 
-                        />
-                    </div>
-                    <motion.button whileTap={{ scale: 0.95 }} className="login-button" type="submit">
-                        Sign In
-                    </motion.button>
-                </form>
-          <div className="footer-links">
+
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+            />
+          </div>
+
+          <div className="input-group">
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required 
+            />
+          </div>
+          {errorMessage && <p className="login-error">{errorMessage}</p>}
+
+          <motion.button whileTap={{ scale: 0.95 }} className="login-button" type="submit">
+            Sign In
+          </motion.button>
+        </form>
+
+        <div className="footer-links">
           <a href="#">Forgot password?</a>
           <p>
             Don't have an account?{' '}
             <span 
-          className="highlight" onClick={() => navigate("/register")} style={{ cursor: 'pointer' }}>
-          Join us
-        </span>
+              className="highlight"
+              onClick={() => navigate("/register")}
+              style={{ cursor: 'pointer' }}
+            >
+              Join us
+            </span>
           </p>
         </div>
       </div>

@@ -21,7 +21,6 @@ const HotelCard: React.FC<Props> = ({ hotel }) => {
     if (isAuthenticated) {
       navigate(`/hotel/${hotel.id}`);
     } else {
-      alert("Пожалуйста, войдите в аккаунт, чтобы просмотреть детали");
       navigate("/login");
     }
   };
