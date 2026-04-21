@@ -28,7 +28,9 @@ const Header: React.FC = () => {
           </button>
 
           <nav className="nav">
-            <button className="nav-btn"><FaHeart /> Избранное</button>
+            <button className="nav-btn" onClick={() => navigate("/favourites")}>
+              <FaHeart /> Избранное
+            </button>
             <button className="nav-btn" onClick={() => navigate("/my-bookings")}>
                 <FaSuitcaseRolling /> Бронирования
             </button>

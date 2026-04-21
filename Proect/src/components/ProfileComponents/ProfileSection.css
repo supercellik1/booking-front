@@ -1,0 +1,105 @@
+.profile-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 16px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255, 182, 193, 0.18), transparent 35%),
+    radial-gradient(circle at 90% 20%, rgba(173, 216, 230, 0.2), transparent 35%),
+    #0f1220;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 24px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.avatar-wrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #7f5af0, #2cb67d);
+  box-shadow: 0 8px 24px rgba(127, 90, 240, 0.45);
+  flex-shrink: 0;
+}
+
+.avatar-icon {
+  font-size: 48px;
+  color: #fff;
+}
+
+.user-main h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.role-badge.traveler {
+  background: rgba(44, 182, 125, 0.18);
+  color: #89ffd2;
+  border: 1px solid rgba(137, 255, 210, 0.35);
+}
+
+.role-badge.admin {
+  background: rgba(255, 107, 107, 0.16);
+  color: #ffb3b3;
+  border: 1px solid rgba(255, 179, 179, 0.35);
+}
+
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.info-item {
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.info-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b8c1ec;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.info-value {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word;
+  color: #fffffe;
+}

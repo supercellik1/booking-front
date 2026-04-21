@@ -5,10 +5,11 @@ import "./CountrySection.css";
 import HotelCard from "../HotelCard/HotelCard";
 import { hotelService } from "../../../api/hotels/hotelService";  
 import type { Hotel } from "../../../api/hotels/types";
+import { useAuth } from "../../../context/AuthContext";
 
 type Props = {
-  title: string;       // Для заголовка (например, "Japan 🇯🇵")
-  countryName: string; // Для запроса в БД (например, "Japan")
+  title: string;
+  countryName: string;
   bgImage: string;
   color: string;
   titleColor?: string;
@@ -16,8 +17,24 @@ type Props = {
 
 const CountrySection: React.FC<Props> = ({ title, countryName, bgImage, color, titleColor }) => {
   const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { user, isAuthenticated } = useAuth();
+
+  const loadFavorites = async () => {
+    if (isAuthenticated && user?.id) {
+      try {
+        const favsRes = await fetch(`http://localhost:5172/api/Favorites/${user.id}`);
+        if (favsRes.ok) {
+          const ids = await favsRes.json();
+          setFavoriteIds(ids);
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки избранного:", err);
+      }
+    }
+  };
 
   useEffect(() => {
     const loadHotels = async () => {
@@ -25,15 +42,16 @@ const CountrySection: React.FC<Props> = ({ title, countryName, bgImage, color, t
       try {
         const data = await hotelService.getHotelsByCountry(countryName);
         setHotels(data);
+        await loadFavorites();
       } catch (error) {
-        console.error("Ошибка загрузки отелей для страны " + countryName + ":", error);
+        console.error("Ошибка загрузки данных для " + countryName + ":", error);
       } finally {
         setLoading(false);
       }
     };
 
     loadHotels();
-  }, [countryName]); 
+  }, [countryName, user?.id, isAuthenticated]); 
 
   if (loading) {
     return (
@@ -100,7 +118,10 @@ const CountrySection: React.FC<Props> = ({ title, countryName, bgImage, color, t
                   visible: { opacity: 1, x: 0 }
                 }}
               >
-                <HotelCard hotel={hotel} />
+                <HotelCard 
+                  hotel={hotel} 
+                  isInitiallyLiked={favoriteIds.includes(hotel.id)} 
+                />
               </motion.div>
             ))
           ) : (
