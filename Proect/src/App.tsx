@@ -9,7 +9,8 @@ import {
   AboutUsPage,
   ProfilePage,
   BookingPage,
-  MyBookingsPage 
+  MyBookingsPage,
+  FavouritePage
 } from "./index";
 
 const App: React.FC = () => {
@@ -28,6 +29,15 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <BookingPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/favourites"
+            element={
+              <ProtectedRoute>
+                <FavouritePage />
               </ProtectedRoute>
             }
           />

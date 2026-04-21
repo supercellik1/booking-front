@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Добавили useEffect
 import { motion } from "framer-motion";
 import "./HotelCard.css";
 import { FaHeart, FaStar } from "react-icons/fa";
@@ -8,14 +8,44 @@ import { useAuth } from "../../../context/AuthContext";
 
 type Props = {
   hotel: Hotel;
+  isInitiallyLiked?: boolean;
+  onRemove?: (id: number) => void;
 };
 
-const HotelCard: React.FC<Props> = ({ hotel }) => {
+const HotelCard: React.FC<Props> = ({ hotel, isInitiallyLiked = false, onRemove }) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth(); 
+  const { isAuthenticated, user } = useAuth(); 
   
   const poster = hotel.images?.[0];
-  const [isLiked, setIsLiked] = useState(false);
+  
+  const [isLiked, setIsLiked] = useState(isInitiallyLiked);
+
+  useEffect(() => {
+    setIsLiked(isInitiallyLiked);
+  }, [isInitiallyLiked]);
+
+  const toggleLike = async () => {
+    if (!isAuthenticated || !user) {
+      navigate("/login");
+      return;
+    }
+
+    const method = isLiked ? "DELETE" : "POST";
+    const url = `http://localhost:5172/api/Favorites?userId=${user.id}&hotelId=${hotel.id}`;
+
+    try {
+      const response = await fetch(url, { method });
+      if (response.ok) {
+        if (isLiked && onRemove) {
+          onRemove(hotel.id);
+        } else {
+          setIsLiked(!isLiked);
+        }
+      }
+    } catch (err) {
+      console.error("Ошибка при связи с БД:", err);
+    }
+  };
 
   const handleDetailClick = () => {
     if (isAuthenticated) {
@@ -61,10 +91,9 @@ const HotelCard: React.FC<Props> = ({ hotel }) => {
         <button
           className={`hotel-like-btn ${isLiked ? "is-liked" : ""}`}
           type="button"
-          aria-label={isLiked ? "Убрать из избранного" : "Добавить в избранное"}
           onClick={(e) => {
-            e.stopPropagation(); 
-            setIsLiked((prev) => !prev);
+            e.stopPropagation();
+            toggleLike();
           }}
         >
           <FaHeart />

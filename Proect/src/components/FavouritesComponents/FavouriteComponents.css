@@ -1,0 +1,65 @@
+.favorites-page {
+  padding: 30px 20px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.favorites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.favorites-title {
+  font-size: 3rem;
+  margin: 76px 0; 
+  color: #ffffff;
+}
+
+.fav-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.fav-btn {
+  background: #eee;
+  border: none;
+  padding: 30px 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fav-btn:hover {
+  background: #ddd;
+}
+
+.favorites-scroll-wrapper {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; 
+}
+
+.favorites-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.favorites-flex-row {
+  display: flex;
+  gap: 25px;
+}
+
+.fav-card-item {
+  flex: 0 0 320px;
+}
+
+.fav-message {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
