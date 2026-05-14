@@ -20,7 +20,7 @@ const MyReviewsPage: React.FC = () => {
         <div className="my-reviews-page">
             <Header />
             <main style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-                <h1>Мои отзывы</h1>
+                <h1 style={{ marginTop: '80px' }}>Мои отзывы</h1>
                 {reviews.length === 0 ? <p>Вы еще не оставляли отзывов.</p> : (
                     <div className="reviews-list">
                         {reviews.map(review => (
