@@ -216,3 +216,128 @@
   top: 0; left: 0;
   z-index: 1;
 }
+
+/* Секция отзывов */
+.reviews-section {
+  margin-top: 30px;
+}
+
+.section-title {
+  color: #1a1a1a;
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+/* Форма добавления отзыва */
+.add-review-container {
+  background: #fffafa;
+  border: 1px solid #ffe4e8;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.review-stars-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.rating-label {
+  margin-left: 10px;
+  font-weight: 600;
+  color: #ff5c8a;
+}
+
+.review-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.review-input-wrapper textarea {
+  width: 100%;
+  border: 1px solid #ffe4e8;
+  border-radius: 12px;
+  padding: 15px 50px 15px 15px;
+  min-height: 80px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: none;
+  transition: border-color 0.3s;
+}
+
+.review-input-wrapper textarea:focus {
+  outline: none;
+  border-color: #ff85a2;
+}
+
+.send-review-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: #ff5c8a;
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.send-review-btn:hover {
+  background: #d63384;
+  transform: scale(1.1);
+}
+
+/* Список отзывов */
+.review-card {
+  border-bottom: 1px solid #fdeef1;
+  padding: 20px 0;
+}
+
+.review-card:last-child {
+  border-bottom: none;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.reviewer-name {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.reviewer-rating {
+  font-weight: 600;
+  color: #ff85a2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.review-text {
+  color: #444;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #b2bec3;
+}
+
+.login-prompt, .no-reviews {
+  text-align: center;
+  color: #636e72;
+  font-style: italic;
+  padding: 20px 0;
+}

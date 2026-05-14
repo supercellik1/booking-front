@@ -1,54 +1,85 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaStar, FaMapMarkerAlt } from "react-icons/fa";
+import { FaStar, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
 import "./HotelDetailsPage.css";
 import { hotelService } from "../../api/hotels/hotelService";
 import type { Hotel } from "../../api/hotels/types";
 
-const fallbackImg = "/fallback-image.jpg"; // Положи этот файл в public или задай другой путь
+const fallbackImg = "/fallback-image.jpg";  
 
 const HotelDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isAuthenticated, token } = useAuth();
 
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentImg, setCurrentImg] = useState(0);
-
-  // Если картинка не прогрузилась, отображаем fallback
   const [imgError, setImgError] = useState(false);
 
+  // Новые состояния для отзывов
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [newComment, setNewComment] = useState("");
+  const [newRating, setNewRating] = useState(5);
+
+  const fetchReviews = async () => {
+    if (!id) return;
+    try {
+      const data = await hotelService.getHotelReviews(id);
+      setReviews(data);
+    } catch (e) {
+      console.error("Ошибка загрузки отзывов:", e);
+    }
+  };
+
+  const fetchHotel = async () => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      const data = await hotelService.getHotelById(id);
+      setHotel(data);
+    } catch (error) {
+      console.error("Ошибка:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchHotel = async () => {
-      if (!id) return;
-      try {
-        setLoading(true);
-        const data = await hotelService.getHotelById(id);
-        setHotel(data);
-      } catch (error) {
-        console.error("Ошибка:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchHotel();
+    fetchReviews();
   }, [id]);
 
-  // Если текущий img изменился — сбрасываем ошибку
   useEffect(() => setImgError(false), [currentImg, hotel]);
+
+  const handleSendReview = async () => {
+    if (!newComment.trim() || !token || !id) return;
+    try {
+      await hotelService.postReview(token, {
+        hotelId: Number(id),
+        rating: newRating,
+        comment: newComment
+      });
+      setNewComment("");
+      setNewRating(5);
+      fetchReviews(); // Перезагружаем список после отправки
+    } catch (e) {
+      alert("Не удалось отправить отзыв");
+    }
+  };
 
   if (loading) return <div className="loading-screen">読み込み中...</div>;
   if (!hotel) return <div className="error-screen">Hotel not found</div>;
 
-  // Determine image URL
   const images = hotel.images && hotel.images.length > 0 ? hotel.images : [fallbackImg];
   const mainImg = !imgError ? images[currentImg % images.length] : fallbackImg;
 
   return (
     <div className="hotel-page-wrapper">
       <button className="back-arrow-fixed" onClick={() => navigate(-1)}>
-        ❮
+        ❮ Back
       </button>
 
       <div className="content-layout">
@@ -57,7 +88,7 @@ const HotelDetailsPage: React.FC = () => {
             <div className="main-slider-img-frame">
               <AnimatePresence mode="wait">
                 <motion.img
-                  key={mainImg + imgError} // чтобы AnimatePresence пересоздавал при ошибке
+                  key={mainImg + imgError}
                   src={mainImg}
                   alt={`Фото отеля ${hotel.name}`}
                   initial={{ opacity: 0 }}
@@ -73,13 +104,11 @@ const HotelDetailsPage: React.FC = () => {
               <button
                 onClick={() => setCurrentImg((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
                 disabled={images.length <= 1}
-                tabIndex={images.length <= 1 ? -1 : 0}
               >❮</button>
               <span>{(currentImg % images.length) + 1} / {images.length}</span>
               <button
                 onClick={() => setCurrentImg((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
                 disabled={images.length <= 1}
-                tabIndex={images.length <= 1 ? -1 : 0}
               >❯</button>
             </div>
           </div>
@@ -91,7 +120,61 @@ const HotelDetailsPage: React.FC = () => {
             </div>
             <div className="description-text">
               <h3>About this place</h3>
-              <p>{hotel.fullDescription}</p>
+              <p className="full-desc">{hotel.fullDescription}</p>
+            </div>
+          </div>
+
+          {/* НОВАЯ СЕКЦИЯ ОТЗЫВОВ */}
+          <div className="glass-card reviews-section">
+            <h3 className="section-title">Guest Reviews</h3>
+            
+            {isAuthenticated ? (
+              <div className="add-review-container">
+                <div className="review-stars-input">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <FaStar 
+                      key={star}
+                      onClick={() => setNewRating(star)}
+                      color={star <= newRating ? "#ff5c8a" : "#ffe4e8"}
+                      style={{ cursor: 'pointer', fontSize: '1.2rem', marginRight: '5px' }}
+                    />
+                  ))}
+                  <span className="rating-label">{newRating} / 5</span>
+                </div>
+                <div className="review-input-wrapper">
+                  <textarea 
+                    placeholder="Tell us about your stay..." 
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                  />
+                  <button className="send-review-btn" onClick={handleSendReview}>
+                    <FaPaperPlane />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="login-prompt">Please log in to leave a review.</p>
+            )}
+
+            <div className="reviews-list">
+              {reviews.length > 0 ? (
+                reviews.map((rev) => (
+                  <div key={rev.id} className="review-card">
+                    <div className="review-header">
+                      <span className="reviewer-name">{rev.userName}</span>
+                      <div className="reviewer-rating">
+                        <FaStar color="#ffb7c5" /> {rev.rating}
+                      </div>
+                    </div>
+                    <p className="review-text">{rev.comment}</p>
+                    <span className="review-date">
+                      {new Date(rev.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="no-reviews">No reviews yet. Be the first!</p>
+              )}
             </div>
           </div>
         </main>
@@ -105,8 +188,7 @@ const HotelDetailsPage: React.FC = () => {
             <div className="rating-row">
               <FaStar color="#ffb7c5" /> {hotel.rating} Excellent
             </div>
-            <button className="main-register-button"
-              onClick={() => navigate(`/book/${hotel.id}`)}>
+            <button className="main-register-button" onClick={() => navigate(`/book/${hotel.id}`)}>
               Book Now
             </button>
           </div>
