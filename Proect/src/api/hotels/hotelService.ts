@@ -1,3 +1,5 @@
+import type { Hotel } from './types';
+
 const BASE_URL = 'http://localhost:5172/api/HotelData'; 
 
 export const hotelService = {

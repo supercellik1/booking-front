@@ -10,8 +10,10 @@ import {
   ProfilePage,
   BookingPage,
   MyBookingsPage,
-  FavouritePage
+  FavouritePage,
+  AdminPanel
 } from "./index";
+import AddHotelPage from "./pages/AddHotelPage";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +25,17 @@ const App: React.FC = () => {
           <Route path="/register" element={<RegisterScreen />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/hotel/:id" element={<HotelDetailsPage />} />
+          <Route path="/hotel/add" element={<AddHotelPage />} />
+
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/book/:id"

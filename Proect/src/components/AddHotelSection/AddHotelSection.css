@@ -1,0 +1,119 @@
+.profile-page {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 12px 24px 12px;
+  background: #191324;
+}
+.profile-card {
+  background: rgba(255,255,255,0.07);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px 0 rgba(36,18,81,.28);
+  color: #fff;
+  padding: 36px 28px 20px 28px;
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.8s cubic-bezier(.42,0,.28,1.46);
+  margin-bottom: 32px;
+}
+
+.add-hotel-title {
+  margin: 0 0 18px 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+}
+
+.add-hotel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.info-item {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 11px 13px 10px 13px;
+  border: 1px solid rgba(255,255,255,0.11);
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  color: #b8c1ec;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.info-value, .profile-info-grid select {
+  width: 100%;
+  border-radius: 7px;
+  border: none;
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  padding: 7px 12px;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 0;
+  font-weight: 500;
+  margin-top: 0;
+  box-sizing: border-box;
+}
+
+.profile-info-grid select {
+  appearance: none;
+  padding-right: 2.4em;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg width='24' height='24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-position: right 0.7em top 52%;
+  background-repeat: no-repeat;
+}
+
+.info-value:focus, .profile-info-grid select:focus {
+  border: 1.7px solid #5bbcff;
+  background: rgba(43,65,219,0.08);
+}
+
+.add-hotel-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #6e2ddf 40%, #119f5a 90%);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 28px 0 rgba(17,159,90,.15);
+  transition: background 0.2s;
+}
+
+.add-hotel-btn:hover {
+  background: linear-gradient(90deg, #4f1597 50%, #10c16a 100%);
+}
+
+.form-error {
+  color: #ffb3b3;
+  font-size: 13px;
+  margin-top: 6px;
+}
+.form-success {
+  color: #93ffc6;
+  font-size: 15px;
+  margin-top: 18px;
+  text-align: center;
+  font-weight: 600;
+}

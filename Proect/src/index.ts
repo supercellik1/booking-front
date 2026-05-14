@@ -6,3 +6,4 @@ export { default as ProfilePage } from "./pages/ProfilePage";
 export { default as BookingPage } from "./pages/BookingPage";
 export { default as MyBookingsPage } from "./pages/MyBookingsPage";
 export { default as FavouritePage } from "./pages/FavouritePage";
+export { default as AdminPanel } from "./components/AdminComponents/AdminPanel";

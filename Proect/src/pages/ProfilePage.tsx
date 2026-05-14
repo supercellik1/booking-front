@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import ProfileSection from '../components/ProfileComponents/ProfileSection';
 
 const ProfilePage: React.FC = () => {
-  const { user } = useAuth();
 
   return (
     <>
