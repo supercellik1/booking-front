@@ -11,7 +11,8 @@ import {
   BookingPage,
   MyBookingsPage,
   FavouritePage,
-  AdminPanel
+  AdminPanel,
+  MyReviewsPage
 } from "./index";
 import AddHotelPage from "./pages/AddHotelPage";
 
@@ -72,6 +73,14 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
+	  <Route
+  	  path="/my-reviews"
+  	   element={
+    		<ProtectedRoute>
+      			<MyReviewsPage />
+    		</ProtectedRoute>
+  	}
+	/>
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

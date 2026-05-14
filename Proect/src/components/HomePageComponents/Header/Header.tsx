@@ -65,7 +65,9 @@ const Header: React.FC = () => {
                   <div className="dropdown-item" onClick={() => { navigate("/profile"); setMenuOpen(false); }}>
                     Профиль ({user?.email})
                   </div>
-                  <div className="dropdown-item">Мои отзывы</div>
+		  <div className="dropdown-item" onClick={() => { navigate("/my-reviews"); setMenuOpen(false); }}>
+  			Мои отзывы
+		  </div>
                   <div className="dropdown-item logout-btn" onClick={() => { logout(); setMenuOpen(false); }}>
                     Выйти
                   </div>
